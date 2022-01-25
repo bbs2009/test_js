@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         const now = new Date();
         const dateDiff = Date.parse(fromDate) - Date.parse(now);
         const dayDiff = Math.floor(dateDiff / (1000*60*60*24));
-        const hourDiff = Math.floor((dateDiff / (1000*60*60)%24));
+        const hourDiff = Math.floor( (dateDiff/(1000*60*60)) % 24 );
         const minDiff = Math.floor( dateDiff / (1000*60) % 60);
         const secDiff = Math.floor( dateDiff / (1000) % 60);
 
