@@ -106,4 +106,44 @@ document.addEventListener("DOMContentLoaded", ()=>{
     updateTimer(endDate, '.timer');
     
 
+    // Модальное окно
+
+    function modalWindow() {
+
+        const modal = document.querySelector('.modal'),
+              btnShowModal = document.querySelectorAll('[data-modal]'),
+              btnCloseModal = document.querySelector('[data-close]');
+
+        function showModalWindow () {
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModalWindow() {
+            modal.classList.remove('show');
+            modal.classList.add('hide');
+            document.body.style.overflow = '';
+        }
+
+        btnShowModal.forEach(element => {
+            element.addEventListener('click', showModalWindow);
+        });
+
+        btnCloseModal.addEventListener('click', hideModalWindow);
+
+        modal.addEventListener('click', (e)=>{
+            if (e.target === modal && modal.classList.contains('show')) {
+                hideModalWindow();
+            }
+
+        });
+
+        document.addEventListener('keydown', (e)=>{
+            hideModalWindow();
+        });
+    }
+
+    modalWindow();
+
  });
