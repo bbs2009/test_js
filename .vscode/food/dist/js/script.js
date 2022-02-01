@@ -124,7 +124,19 @@ document.addEventListener("DOMContentLoaded", ()=>{
             modal.classList.remove('show');
             modal.classList.add('hide');
             document.body.style.overflow = '';
+            clearInterval(showPopUpId);
         }
+
+        function showModalAfterOffset(){
+            if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+                showModalWindow();
+                window.removeEventListener('scrol', showModalAfterOffset);
+            }
+        }
+
+        document.addEventListener('scrol', showModalAfterOffset);
+        
+        const showPopUpId = setTimeout(showModalWindow, 5000);
 
         btnShowModal.forEach(element => {
             element.addEventListener('click', showModalWindow);
@@ -143,6 +155,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             hideModalWindow();
         });
     }
+
+        
 
     modalWindow();
 
