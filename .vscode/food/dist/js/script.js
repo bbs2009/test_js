@@ -152,12 +152,71 @@ document.addEventListener("DOMContentLoaded", ()=>{
         });
 
         document.addEventListener('keydown', (e)=>{
-            hideModalWindow();
+            if (e.key === 'Escape') {
+                hideModalWindow();
+            }
         });
     }
 
         
 
     modalWindow();
+
+    //forms 
+
+    const allForms = document.querySelectorAll('form');
+
+    const message = {
+        loading:'Загрузка',
+        succes:'Успешно',
+        error:'Что то пошло не так'
+    };
+
+    function sendData(formItem){
+        formItem.addEventListener('submit', (e)=>{
+            e.preventDefault();
+            
+            const statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            statusMessage.textContent = message.loading;
+            formItem.append(statusMessage);
+
+            const request = new XMLHttpRequest();
+            
+            request.open('POST', 'http://test.lan/server.php' );
+            request.setRequestHeader("Content-Type", "application/json");
+
+            
+            const formData = new FormData(formItem);
+            const obj = {};
+            formData.forEach((key, val)=>{
+                obj[val]=key;
+            });
+
+            const json = JSON.stringify(obj);
+            request.send(json);
+            
+            request.addEventListener('load', ()=>{
+                if (request.status ===200){
+                    console.log(request.responseType);
+                    console.log(request.response);
+                    statusMessage.textContent = message.succes;
+                    formItem.reset();
+                    
+                    setTimeout(() => {
+                        statusMessage.remove();
+                    }, 2000);
+                }
+                else {
+                    statusMessage.textContent = message.error;
+                }    
+            });
+        });
+    }
+
+
+    allForms.forEach((el)=>{
+        sendData(el);
+    });
 
  });

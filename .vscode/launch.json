@@ -9,7 +9,10 @@
         "port": 5500,
         "request": "attach",
         "type": "pwa-chrome",
-        "webRoot": "${workspaceFolder}"
+        "webRoot": "${workspaceFolder}",
+ 
+        
+        
     },
         {
             "type": "pwa-chrome",
@@ -17,6 +20,8 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
-        }
+        },
+
+      
     ]
 }
