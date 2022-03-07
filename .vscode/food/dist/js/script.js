@@ -459,50 +459,101 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
 
-    // <div class="offer__slider-wrapper">
-                    
-    // </div>
+    // калькулятор + интерактив
 
-    // <div class="offer__slider-counter">
-                   
-    // </div>
+    const totalCalories = document.querySelector('.calculating__result span');
+    let totalCalorieValue, 
+    physicalActivityValue, 
+    sexValue, 
+    constitutionValue;
 
-    //  <div class="offer__slider-prev">
-    //                     <img src="icons/left.svg" alt="prev">
-    //                 </div>
-    //                 <span id="current">03</span>
-    //                 /
-    //                 <span id="total">04</span>
-    //                 <div class="offer__slider-next">
-    //                     <img src="icons/right.svg" alt="next">
-    //                 </div>
+    function calculateCalories (sexValue, constitutionValue, physicalActivityValue) {
+        
 
-    // <div class="offer__slide">
-    //                     <img src="img/slider/pepper.jpg" alt="pepper">
-    //                 </div>
-    //                 <div class="offer__slide">
-    //                     <img src="img/slider/food-12.jpg" alt="food">
-    //                 </div>
-    //                 <div class="offer__slide">
-    //                     <img src="img/slider/olive-oil.jpg" alt="oil">
-    //                 </div>
-    //                 <div class="offer__slide">
-    //                     <img src="img/slider/paprika.jpg" alt="paprika">
-    //                 </div> 
+        if (!sexValue || !constitutionValue || !physicalActivityValue) {
+            totalCalories.textContent = '____ ';
+        }
+        else {
+            console.log(totalCalorieValue);
+            totalCalorieValue = Math.round( sexValue * constitutionValue  * physicalActivityValue);
+            totalCalories.textContent = totalCalorieValue;
+            
+
+        }
+    }
+
+    calculateCalories();
+
+    //пол
+    const sex = document.querySelectorAll('#gender .calculating__choose-item');
+
+    sex.forEach((elemSex)=>{
+        
+        elemSex.addEventListener('click', (e)=>{
+            sex.forEach((el)=>{
+                el.classList.remove('calculating__choose-item_active');
+            });
+        
+            e.target.classList.add('calculating__choose-item_active');
+            sexValue = elemSex.getAttribute('data-rank');
+
+            calculateCalories (sexValue, constitutionValue, physicalActivityValue);
+        });
+    });
 
 
+    // конституция
+
+
+    const constitution = document.querySelectorAll('.calculating__choose_medium .calculating__choose-item');
+
+    constitution.forEach((element)=>{
+        element.addEventListener('change', (e)=>{
+            let constvalTmp = e.target.value;
+            
+
+            constitution.forEach((elem)=>{
+                elem.classList.remove('calculating__choose-item_active');
+                elem.value = '';
+            });
+            
+            e.target.value = constvalTmp;
+
+            e.target.classList.add('calculating__choose-item_active');
+            constitutionValue =  +e.target.getAttribute('data-rank') * +e.target.value;
+            
+            calculateCalories (sexValue, constitutionValue, physicalActivityValue);
+        });
+
+    });
+
+
+    //физическая активность
+
+    const physicalActivity = document.querySelectorAll('.calculating__choose_big .calculating__choose-item');
+    
+    
+    physicalActivity.forEach((elem)=>{
+        elem.addEventListener('click', (e)=>{
+        physicalActivity.forEach((el)=>{
+            el.classList.remove('calculating__choose-item_active');
+        });
+       
+        e.target.classList.add('calculating__choose-item_active');
+        physicalActivityValue = elem.getAttribute('data-rank');
+
+        calculateCalories (sexValue, constitutionValue, physicalActivityValue);
+       });
+    });
+
+
+
+
+
+    
 
    const mySlider = new Slider('.offer__slider');
     
-//    document.querySelector('.offer__slider-next').addEventListener('click', (e)=>{
-//         console.log("клик вне класса вперед");
-//         mySlider.nextSlideHendler();
-//     });
-
-//     document.querySelector('.offer__slider-prev').addEventListener('click', (e)=>{
-//         console.log("клик вне класса назад");
-//         mySlider.prevSlideHendler();
-//     });
 
     //оповещение о отправке
 
